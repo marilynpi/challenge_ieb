@@ -17,7 +17,7 @@ while True:
     client_socket, client_address = server_socket.accept()
     print(f"{client_address[0]}:{client_address[1]} is connected")
     try:
-        # Receive the data (1024 bytes) and retransmit it
+        # Receive data (1024 bytes) and retransmit it
         data = client_socket.recv(1024)
         if data:
             print(f'Client sent: {data}')
@@ -25,5 +25,5 @@ while True:
             client_socket.sendall(data)
             break
     finally:
-        # Clean up the connection
+        # Close connection
         client_socket.close()
