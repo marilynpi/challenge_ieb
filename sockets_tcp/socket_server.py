@@ -10,16 +10,16 @@ load_dotenv()
 
 class SocketServer:
     """
-    A class used to represent a Socket TCP Server that that listens a Socket TCP Client and responds with a product prices and his updates.
-    While a Socket TCP Client is connected, Socket TCP Server watchs for prices updates in a REST-API server and responds when prices been updated.
+    A class used to represent a SocketServer that listens a SocketClient and responds with a product prices and his updates.
+    While a SocketClient is connected, SocketServer watchs for prices updates in a REST API Server and responds when prices been updated.
     ...
 
     Attributes:
     server (Socket Object): A socket
-    address (tuple (str, int)): Address to connect whit the Socket TCP server (host, port)
-    client_address (tuple (str, int)): Client connected address (host, port)
-    client_connection : A socket client connected to server socket
-    http_address (tuple (str, int)): Address to connect whit REST API server (host, port)
+    address (tuple (str, int)): Address to connect whit the SocketServer (host, port)
+    client_address (tuple (str, int)): SocketClient connected address (host, port)
+    client_connection : A SocketClient connected to SocketServer
+    http_address (tuple (str, int)): Address to connect whit REST API Server (host, port)
 
     Is needed set up a .env file with the following environment variables:
     SOCKET_HOST: host address where server socket will be create

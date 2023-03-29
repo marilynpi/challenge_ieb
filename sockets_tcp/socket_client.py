@@ -9,7 +9,7 @@ load_dotenv()
 
 class SocketClient:
     """
-    A class used to represent a SocketClient that sends a product_id received as parameter to a Socket TCP Server, then wait for prices and updates.
+    A class used to represent a SocketClient that sends a product_id received as parameter to a SocketServer, then wait for prices and updates.
     ...
 
     Attributes:
