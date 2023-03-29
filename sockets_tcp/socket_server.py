@@ -26,7 +26,7 @@ class SocketServer:
     REST_API_HOST: host address where rest api is served
     REST_API_PORT: port number where server socket is served
 
-    Typical usage example:
+    Usage example:
     s = SocketServer
     s.start()
     """

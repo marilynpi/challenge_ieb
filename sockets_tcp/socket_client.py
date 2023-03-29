@@ -20,7 +20,7 @@ class SocketClient:
     SOCKET_HOST: SocketServer host address
     SOCKET_PORT: SocketServer port number
 
-    Typical usage example:
+    Usage example:
     s = SocketClient(product_id)
     s.start()
     """

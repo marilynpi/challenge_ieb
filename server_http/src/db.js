@@ -1,9 +1,12 @@
 import pg from 'pg'
 import * as dotenv from 'dotenv'
 
+// Load environment variables
 dotenv.config({ path: '../.env' })
+
 const { Pool } = pg
 
+// Connect to DataBase and create a Pool
 const pool = new Pool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
