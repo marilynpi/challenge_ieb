@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 # Find .env files in the directory and load environment variables
 load_dotenv()
 
+
 class SocketClient:
     """
     A class used to represent a SocketClient that sends a product_id received as parameter to a Socket TCP Server, then wait for prices and updates.
@@ -38,7 +39,8 @@ class SocketClient:
         Sets server_address with environment variables.
         """
         try:
-            self.server_address = (os.environ['SOCKET_HOST'], int(os.environ['SOCKET_PORT']))
+            self.server_address = (
+                os.environ['SOCKET_HOST'], int(os.environ['SOCKET_PORT']))
         except Exception as e:
             print(f'Error with environment variables: {e}')
             exit()
@@ -79,11 +81,12 @@ class SocketClient:
         try:
             self.server.connect(self.server_address)
             self.handle_request()
-            
+
         except Exception as e:
             print(f'Error: {e}')
 
-#Validate parameters, create SocketClient and starts connection with 
+
+# Validate parameters, create SocketClient and starts connection with
 if len(sys.argv) == 2 and sys.argv[1].isnumeric():
     socket_client = SocketClient(sys.argv[1])
     socket_client.start()

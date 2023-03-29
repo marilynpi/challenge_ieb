@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 # Find .env files in the directory and load environment variables
 load_dotenv()
 
+
 class SocketServer:
     """
     A class used to represent a Socket TCP Server that that listens a Socket TCP Client and responds with a product prices and his updates.
@@ -41,23 +42,24 @@ class SocketServer:
         self.client_connection = ''
         self.http_address = ''
 
-
     def set_address(self):
         """ 
         Sets http_address with environment variables.
         """
         try:
-            self.address = (os.environ['SOCKET_HOST'], int(os.environ['SOCKET_PORT']))
+            self.address = (os.environ['SOCKET_HOST'],
+                            int(os.environ['SOCKET_PORT']))
         except Exception as e:
             print(f'Error with environment variables: {e}')
             exit()
-    
+
     def set_http_address(self):
         """ 
         Sets address with environment variables.
         """
         try:
-            self.http_address = (os.environ['REST_API_HOST'], os.environ['REST_API_PORT'])
+            self.http_address = (
+                os.environ['REST_API_HOST'], os.environ['REST_API_PORT'])
         except Exception as e:
             print(f'Error with environment variables: {e}')
             exit()
@@ -80,27 +82,28 @@ class SocketServer:
         """
         self.set_http_address()
         try:
-            r = requests.get(f'http://{self.http_address[0]}:{self.http_address[1]}/product/{product_id}')
+            r = requests.get(
+                f'http://{self.http_address[0]}:{self.http_address[1]}/product/{product_id}')
             r.raise_for_status()
 
             if r.status_code == 200:
                 return r
             else:
                 return False
-            
+
         except requests.exceptions.HTTPError as errh:
-            if(r.json().get('message')):
+            if (r.json().get('message')):
                 error = r.json().get('message').encode('utf-8')
             else:
                 error = b'HTTP Server Error'
-                  
+
             self.client_connection.sendall(error)
             self.client_connection.close()
 
             print('HTTP Server Error')
             print(errh.args)
             return False
-    
+
     def validate(self, product_id):
         """ 
         Checks if the product_id sent by client is valid
@@ -113,7 +116,7 @@ class SocketServer:
             return True
         else:
             return False
-    
+
     def handle_prices_updates(self, product_id):
         """ 
         Request for prices to REST API and if it responds, checks if prices has been updated in 10 seconds intervals and sends to client
@@ -150,15 +153,18 @@ class SocketServer:
         while True:
             print('Waiting for a connection')
             self.client_connection, self.client_address = self.server.accept()
-            print(f'{self.client_address[0]}:{self.client_address[1]} is connected')
+            print(
+                f'{self.client_address[0]}:{self.client_address[1]} is connected')
             try:
-                product_id = self.client_connection.recv(16).decode('utf-8').strip()
+                product_id = self.client_connection.recv(
+                    16).decode('utf-8').strip()
                 print('Received id {!r}'.format(product_id))
                 print(self.validate(product_id))
                 if self.validate(product_id):
                     self.handle_prices_updates(product_id)
                 else:
-                    print(f'No data from {self.client_address[0]}:{self.client_address[1]}')
+                    print(
+                        f'No data from {self.client_address[0]}:{self.client_address[1]}')
                     self.client_connection.close()
                     break
             except Exception as e:
@@ -166,7 +172,7 @@ class SocketServer:
                 print(f'Error: {e}')
                 # Close connection
                 self.client_connection.close()
-    
+
     def start(self):
         """ 
         Start Socket Server
@@ -174,6 +180,6 @@ class SocketServer:
         self.start_listening()
         self.handle_client()
 
+
 socket_server = SocketServer()
 socket_server.start()
-
