@@ -11,7 +11,7 @@ A technical challenge that implements a socket TCP server and client in Python, 
 
 ## Environment Variables
 
-To run this project, you will need to add the following environment variables to your `.env` file
+To run this project, you will need to add the following environment variables to your `.env` file in directory root.
 
 `SOCKET_HOST`
 `SOCKET_PORT`
