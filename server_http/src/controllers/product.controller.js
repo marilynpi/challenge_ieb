@@ -1,7 +1,7 @@
 import pool from '../db.js'
 import * as dotenv from 'dotenv'
 
-dotenv.config()
+dotenv.config({ path: '../../.env' })
 
 const getProducts = async (req, res, next) => {
   try {

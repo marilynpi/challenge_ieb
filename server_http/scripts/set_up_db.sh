@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Get enviroment variables
-source .env
+source ../.env
 
 # Create Database
 sudo -u postgres psql -c "CREATE DATABASE $DB_DATABASE;"

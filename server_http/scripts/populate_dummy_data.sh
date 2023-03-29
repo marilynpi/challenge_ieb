@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Get enviroment variables
-source .env
+source ../.env
 
 # Populate Product Table
 echo "Populate product table..." 

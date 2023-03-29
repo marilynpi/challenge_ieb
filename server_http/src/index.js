@@ -1,8 +1,11 @@
 import express from 'express'
 import router from './routes/product.routes.js'
+import * as dotenv from 'dotenv'
+
+dotenv.config({ path: '../.env' })
 
 const app = express()
-const port = 4000
+const port = process.env.REST_API_PORT
 
 app.use(express.json())
 app.use(router)
