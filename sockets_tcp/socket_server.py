@@ -44,7 +44,7 @@ class SocketServer:
 
     def set_address(self):
         """ 
-        Sets http_address with environment variables.
+        Sets SocketServer address with environment variables.
         """
         try:
             self.address = (os.environ['SOCKET_HOST'],
@@ -55,7 +55,7 @@ class SocketServer:
 
     def set_http_address(self):
         """ 
-        Sets address with environment variables.
+        Sets REST API Server address with environment variables.
         """
         try:
             self.http_address = (
@@ -66,7 +66,7 @@ class SocketServer:
 
     def start_listening(self):
         """ 
-        Bind and enable socket server to accept a connection. 
+        Bind and enable SocketServer to accept a connection. 
         """
         self.set_address()
         self.server.bind(self.address)
@@ -119,7 +119,7 @@ class SocketServer:
 
     def handle_prices_updates(self, product_id):
         """ 
-        Request for prices to REST API and if it responds, checks if prices has been updated in 10 seconds intervals and sends to client
+        Request for prices to REST API and if it responds, checks if prices has been updated in 10 seconds intervals and sends prices updated to client
         Args:
             product_id (str): Product ID
         """
@@ -148,7 +148,7 @@ class SocketServer:
 
     def handle_client(self):
         """ 
-        Socket server start listening for a connection. When a client connects, gets the product_id parameter and validate it. If is a product_id valid, requests prices to REST API, else closes client connection and keeps listening for a new connection.
+        SocketServer starts listening for a connection. When a client connects, gets the product_id parameter and validate it. If is a product_id valid, requests prices to REST API, else closes client connection and keeps listening for a new connection.
         """
         while True:
             print('Waiting for a connection')
@@ -170,7 +170,6 @@ class SocketServer:
             except Exception as e:
                 self.client_connection.sendall(b'Socket Server Error')
                 print(f'Error: {e}')
-                # Close connection
                 self.client_connection.close()
 
     def start(self):
