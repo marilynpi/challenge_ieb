@@ -97,7 +97,6 @@ Start Socket Client: receives as parameter a number as product id
 ## Next steps
 
 - Add [logging](https://docs.python.org/3/howto/logging.html) in sockets
-- Add multithreading in sockets
 - Add testing with [pytest](https://docs.pytest.org/en/7.2.x/) and [mocha](https://mochajs.org/)
 - Dockerize
 - Add monitoring with Sentry or Errbit
