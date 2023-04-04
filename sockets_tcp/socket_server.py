@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 # Find .env files in the directory and load environment variables
 load_dotenv()
 
+
 class SocketServer:
     """
     A class used to represent a SocketServer that listens Clients and handles it with Threads. When a Client is connected a new Client Thread starts. 
@@ -38,7 +39,6 @@ class SocketServer:
 
         signal.signal(signal.SIGINT, self.signal_handler)
 
-
     def set_address(self):
         """ 
         Sets Socket address with environment variables.
@@ -64,7 +64,6 @@ class SocketServer:
 
         except socket.error as e:
             print(str(e))
-        
 
     def handle_clients(self):
         """ 
@@ -75,10 +74,9 @@ class SocketServer:
 
             print(
                 f'{client_address[0]}:{client_address[1]} is connected')
-            
+
             Client(client_connection, client_address).start()
-        
-    
+
     def signal_handler(self, signal, frame):
         """ 
         Handle a Ctrl+C signal. When Ctrl+C is pressed, close and shutdown  Server.
@@ -87,6 +85,7 @@ class SocketServer:
         self.server.shutdown(socket.SHUT_RDWR)
         self.server.close()
         sys.exit(0)
+
 
 class Client(Thread):
     """
@@ -107,13 +106,14 @@ class Client(Thread):
     Client(client_connection, client_address).start()
 
     """
+
     def __init__(self, client_connection, client_address):
         """
         Initializes a instance of Client Thread.
         """
 
         Thread.__init__(self)
-        
+
         self.connection = client_connection
         self.address = client_address
         self.http_address = ''
@@ -126,7 +126,7 @@ class Client(Thread):
         """
 
         print('Closing Client')
-        #self.connection.close()
+        # self.connection.close()
         sys.exit(0)
 
     def set_http_address(self):
@@ -154,7 +154,7 @@ class Client(Thread):
             return True
         else:
             return False
-        
+
     def handle_prices_updates(self, product_id):
         """ 
         While a socket client is connected and REST API responds, requests for prices and checks if prices has been updated in 10 seconds intervals. If any price is updated, sends it to client.
@@ -181,11 +181,12 @@ class Client(Thread):
                         print(f'Client connection closed')
                         break
                 else:
-                    print(f'No new price from http server for product {product_id}')
+                    print(
+                        f'No new price from http server for product {product_id}')
                 time.sleep(10)
             else:
                 raise Exception()
-            
+
     def request_prices(self, product_id):
         """ 
         Requests prices for a product to REST API server.
@@ -217,9 +218,10 @@ class Client(Thread):
             print('HTTP Server Error')
             print(errh.args)
             return False
-        
+
         except requests.exceptions.ConnectionError:
-            print(f'HTTP Server not rechable http://{self.http_address[0]}:{self.http_address[1]}')
+            print(
+                f'HTTP Server not rechable http://{self.http_address[0]}:{self.http_address[1]}')
             return False
 
     def run(self):
@@ -232,9 +234,10 @@ class Client(Thread):
                 product_id = self.connection.recv(
                     16).decode('utf-8').strip()
                 print('Received id {!r}'.format(product_id))
-                
+
                 if self.validate(product_id):
-                    handle_prices_updates = self.handle_prices_updates(product_id)
+                    handle_prices_updates = self.handle_prices_updates(
+                        product_id)
 
                 else:
                     print(
@@ -246,6 +249,7 @@ class Client(Thread):
                 self.connection.sendall(b'Socket Server Error')
                 self.connection.close()
                 return False
+
 
 socket_server = SocketServer()
 socket_server.start()
