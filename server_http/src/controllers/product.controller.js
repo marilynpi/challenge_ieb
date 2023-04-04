@@ -49,7 +49,7 @@ const getProduct = async (req, res, next) => {
  *   "purchasePrice": 300,
  *   "salePrice": 304
  * }
- * @summary Updates a product prices by ID and acording with a JSON received as URI parameter and a JSON received as request body.
+ * @summary Updates product prices by ID received as URI parameter, acording with a JSON received as request body.
  * @tags products
  * @return {object} 200 - success response - application/json
  * @return {object} 400 - Bad request response

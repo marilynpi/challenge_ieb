@@ -157,7 +157,7 @@ class Client(Thread):
         
     def handle_prices_updates(self, product_id):
         """ 
-        While a socket client is connected and REST API responds, requests for prices and checks if prices has been updated in 10 seconds intervals then sends to client.
+        While a socket client is connected and REST API responds, requests for prices and checks if prices has been updated in 10 seconds intervals. If any price is updated, sends it to client.
 
         Args:
             product_id (str): Product ID

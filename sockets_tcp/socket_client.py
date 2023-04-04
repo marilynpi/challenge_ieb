@@ -86,7 +86,7 @@ class SocketClient:
             print(f'Error: {e}')
 
 
-# Validate parameters, create SocketClient and starts connection with
+# Validate parameters, create SocketClient and starts connection
 if len(sys.argv) == 2 and sys.argv[1].isnumeric():
     socket_client = SocketClient(sys.argv[1])
     socket_client.start()
