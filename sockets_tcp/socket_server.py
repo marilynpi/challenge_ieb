@@ -126,7 +126,7 @@ class Client(Thread):
         """
 
         print('Closing Client')
-        # self.connection.close()
+        self.connection.close()
         sys.exit(0)
 
     def set_http_address(self):
