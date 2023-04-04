@@ -84,7 +84,7 @@ Start to updates prices for products random with random values in a time interva
 
 ```bash
   cd server_http/
-  npm run update-products <time in milliseconds>
+  npm run update-products 15000
 ```
 
 Start Socket Server TCP:
