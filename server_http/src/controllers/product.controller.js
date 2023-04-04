@@ -79,4 +79,73 @@ const updateProduct = async (req, res, next) => {
   }
 }
 
-export { getProducts, getProduct, updateProduct }
+/**
+ * Gets a random integer number between min and max.
+ * @param {integer} min: min value (excluded)
+ * @param {integer} max: max value (included)
+ * @return {integer} random integer between min and max
+ */
+const randomInt = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+/**
+ * Gets a random item from a array: sort array randomly and return first item
+ * @param list {array} array to get the random item
+ * @return {array} random integer between min and max
+ */
+const getRandomItem = (list) => {
+  list.sort(function() {return 0.5 - Math.random()}) // random number between -0.5 and 0.49999
+  return list[0]
+}
+
+/**
+ * Updates prices for a product random with random values
+ */
+const updateProductRandomly = async() => {
+  try {
+    const result = await pool.query('SELECT * FROM ' + process.env.DB_TABLE)
+
+    // get random product
+    const ramdomProduct = getRandomItem(result.rows)
+    let { id, purchaseprice, saleprice } = ramdomProduct
+
+    // update prices ramdomly between -5 and 5
+    purchaseprice = purchaseprice + randomInt(-6, 5)
+    saleprice = saleprice + randomInt(-6, 5)
+
+    try {
+      const result = await pool.query('UPDATE ' + process.env.DB_TABLE + ' SET purchasePrice = $1, salePrice = $2 WHERE id=$3 returning *', [
+        purchaseprice,
+        saleprice,
+        id
+      ])
+
+      console.log('Product prices updated successfully')
+      console.log('Product ID: ' + id)
+      console.log('New prices: ' + purchaseprice + ', ' + saleprice )
+  
+      if (result.rowCount === 0) {
+        console.log ('Product not found')
+      }  
+    } catch (error) {
+      console.log (error)
+    }
+  } catch (error) {
+    console.log (error)
+  }
+}
+
+/**
+ * Updates prices for products random with random values in a time interval
+ * @param time {number} time in milliseconds
+ */
+const updateProductsInterval = (time) => {
+  updateProductRandomly()
+  setInterval(async() =>
+  {
+    updateProductRandomly()
+  }, time)
+}
+
+export { getProducts, getProduct, updateProduct, updateProductsInterval }

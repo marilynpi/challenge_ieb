@@ -80,6 +80,13 @@ Start http server:
   npm start
 ```
 
+Start to updates prices for products random with random values in a time interval:
+
+```bash
+  cd server_http/
+  npm run update-products <time in milliseconds>
+```
+
 Start Socket Server TCP:
 
 ```bash
